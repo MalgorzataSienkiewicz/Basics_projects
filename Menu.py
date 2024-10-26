@@ -1,19 +1,19 @@
 
 def menu():
-    print('Welcome w menu!')
+    print('Welcome to the menu!')
 
-    print("1. Wyświetl użytkowników.")
-    print("2. Dodaj użytkownika.")
-    print("3. Usuń użytkownika")
-    print("4. Wyjdź z programu.")
+    print("1. Display users.")
+    print("2. Add user.")
+    print("3. Remove user.")
+    print("4. Exit the program.")
 
 def loop():
     while True:
             menu()
-            choice = input('Który punkt z menu Cie interesuje? ').strip()
+            choice = input('Which item from the menu interests you? ').strip()
 
             if not choice.isdigit():
-                print("Musisz podać cyfre od 1 do 4.")
+                print("Enter a number from the range of 1 to 4.")
                 continue
 
             choice = int(choice)
@@ -27,50 +27,50 @@ def loop():
             elif choice == 4:
                 break
             else:
-                print("W menu są tylko punkty od 1 do 4.")
+                print("The menu only has items from 1 to 4.")
 def choice_one():
-         with open("Uzytkownicy z programu - menu.txt", "r") as file:
+         with open("Users from program - Menu.txt", "r") as file:
             users = file.readlines()
-            print("Oto lista użytkowników:")
+            print("Here is the list of users:")
             for user in users:
                 print(user.strip())
 def choice_two():
 
-         with open("Uzytkownicy z programu - menu.txt", "r") as file:
+         with open("Users from program - Menu.txt", "r") as file:
             users = file.readlines()
-            new_user = input("Wpisz imie użytkownika, którego chcesz dodać: ").strip()
+            new_user = input("Enter the name of the user you want to add:").strip()
             if new_user + '\n' in users:
-                print("Użytkownik o takiej nazwie już istnieje.")
+                print("A user with that name already exists.")
             else:
-                with open("Uzytkownicy z programu - menu.txt", 'a') as file:
+                with open("Users from program - Menu.txt", 'a') as file:
                     file.write(new_user + '\n')
-                    print(f'Dodano użytkownika {new_user}!')
+                    print(f'User added {new_user}!')
                     users.append(new_user)
-                    print("Oto lista użytkowników:")
+                    print("Here is the list of users:")
                     for user in users:
                         print(user.strip())
 def choice_three():
 
-        with open("Uzytkownicy z programu - menu.txt", "r") as file:
+        with open("Users from program - Menu.txt", "r") as file:
             users = file.readlines()
-            print("Oto lista użytkowników:")
+            print("Here is the list of users:")
             for user in users:
                 print(user.strip())
-                remove_user = input("Wpisz imię użytkownika, którego chcesz usunąć: ").strip()
+                remove_user = input("Enter the name of the user you want to delete:").strip()
                 if remove_user + '\n' in users:
                     users.remove(remove_user + '\n')
-                    with open('Uzytkownicy z programu - menu.txt', 'w') as file:
+                    with open('Users from program - Menu.txt', 'w') as file:
                         file.writelines(users)
-                    print(f'Usunięto użytkownika {remove_user}!')
-                    print("Oto lista użytkowników:")
+                    print(f'User deleted{remove_user}!')
+                    print("Here is the list of users:")
                     for user in users:
                         print(user.strip())
 
                 else:
-                    print("Użytkownika o takiej nazwie nie ma w menu.")
-                    user_list =(input("Jeżeli chcesz wyświetlić listę użytkówników wpisz 'tak' "))
-                    print("Oto lista użytkowników:")
-                    if user_list == 'tak':
+                    print("There is no user with that name in the menu.")
+                    user_list =(input("If you want to display the list of users, type 'yes'."))
+                    print("Here is the list of users:")
+                    if user_list == 'yes':
                         for user in users:
                             print(user.strip())
 
