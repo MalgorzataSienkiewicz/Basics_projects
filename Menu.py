@@ -44,13 +44,11 @@ def display_users():
                 print(user.strip())
         
         print()
-        back_to_menu = int(input("Would you like to return to the menu? Enter 1 for yes: "))
-        if back_to_menu == 1:
-            choices()
+        input("Press enter to continue..")
 
 def add_user():
     while True:
-        new_user = input("Which user's name would you like to add? ").strip()
+        new_user = input("Which users name would you like to add? ").strip()
         with open("Users from program - Menu.txt", "a+") as file:
             file.seek(0)
             users = file.readlines()
@@ -71,13 +69,13 @@ def add_user():
                 for user in users:
                     print(user.strip())
 
-                next_user = int(input("Do you want to add the next user to the list? If yes enter - 1, enter - 2 if you would like to return to the menu: "))
-                if next_user == 1:
+                next_user = input("""Do you want to add the next user to the list?
+                                     If yes enter - 1, 
+                                     enter - 2 if you would like to return to the menu: """)
+                if next_user.isdigit() and int(next_user) == 1:
                     continue
                 else:
-                    back_to_menu = int(input("Would you like to return to the menu? Enter 1 for yes: "))
-                    if back_to_menu == 1:
-                        choices()
+                    input("Press enter to continue..")
 
 def remove_user():
     with open("Users from program - Menu.txt", "r") as file:
@@ -100,8 +98,8 @@ def remove_user():
         else:
             print("There is no user with that name in the list.")
 
-        user_list = input("If you want to display the list of users again, type 'yes': ")
-        if user_list.lower() == 'yes':
+        user_list = input("If you want to display the list of users again enter - 1")
+        if user_list.isdigit() and int(user_list) == 1:
             print("Here is the list of users:")
             for user in users:
                 print(user.strip())
