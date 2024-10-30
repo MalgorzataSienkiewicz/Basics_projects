@@ -110,23 +110,22 @@ def choice_word():
     word = random.choice(words)
     return word
 
-def basic_information():
-    word = choice_word()
-    max_wrong = len(word) -1
+def basic_information(word):
+    max_wrong = len(hangman())
     hidden_word = '-' * len(word)
-    answer_player = ''
-    return max_wrong, hidden_word, answer_player
+
+    return max_wrong, hidden_word
 
 def play_game():
     Hangman = hangman()
     word = choice_word()
-    max_wrong, hidden_word, answer_player = basic_information()
+    max_wrong, hidden_word = basic_information(word)
     wrong = 0
     print(f"This is the word I chose {hidden_word}. Try to guess it, letter by letter\n")
     while wrong < max_wrong:
         guess_player = input("Enter a letter, and I’ll check if your letter is in my word: \n").lower().strip()
         if len(guess_player) != 1 or not guess_player.isalpha():
-            print("Enter a letter.")
+            print("This isn't a single letter.")
             continue
         if guess_player in hidden_word:
             print("This letter has already been guessed; try another one.")
@@ -140,14 +139,14 @@ def play_game():
                 print(f"Congratulation! You guessed! My word is: {word} ")
                 break
         else:
-            print(f"I'm sorry,that letter \"{guess_player}\" is not in my word.")
+            print(f"I'm sorry, that letter \"{guess_player}\" is not in my word.")
             print(Hangman[wrong])
             wrong += 1
             print(f"The word now looks like this: {hidden_word}")
 
 
-
-    print(f"You've been hanged!. My word is: {word}")
+    if wrong == max_wrong:
+        print(f"You've been hanged!. My word is: {word}")
 
 def main():
     print(welcome_message())
