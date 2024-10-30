@@ -11,7 +11,7 @@ def choices():
         choice = input('Which item from the menu interests you? ').strip()
 
         if not choice.isdigit():
-            print("Enter a number from the range of 1 to 4.")
+            print("\nEnter a number from the range of 1 to 4.\n")
             continue
 
         choice = int(choice)
@@ -34,10 +34,8 @@ def display_users():
         content = file.readlines()
         
         if len(content) == 0:
-            answer = int(input("File is empty. Do you want to add a user to the list? If yes, enter - 1: "))
-            if answer == 1:
-                print("You can add user names by selecting option 2.\n")
-                choices()
+            print("File is empty.")
+                
         else:
             print("Here is the list of users:")
             for user in content:
@@ -57,7 +55,7 @@ def add_user():
                 another_name = input("A user with that name already exists. You must choose another username.\n"
                                      "Enter another name or return to menu by entering 1: ")
                 if another_name.isdigit() and int(another_name) == 1:
-                    choices()
+                    break
                 else:
                     continue
             else:
@@ -69,13 +67,12 @@ def add_user():
                 for user in users:
                     print(user.strip())
 
-                next_user = input("""Do you want to add the next user to the list?
-                                     If yes enter - 1, 
-                                     enter - 2 if you would like to return to the menu: """)
+                next_user = input("Do you want to add the next user to the list? \nIf yes enter - 1,\notherwise press enter and return to menu. ")
                 if next_user.isdigit() and int(next_user) == 1:
                     continue
                 else:
-                    input("Press enter to continue..")
+                    break
+                
 
 def remove_user():
     with open("Users from program - Menu.txt", "r") as file:
@@ -98,10 +95,5 @@ def remove_user():
         else:
             print("There is no user with that name in the list.")
 
-        user_list = input("If you want to display the list of users again enter - 1")
-        if user_list.isdigit() and int(user_list) == 1:
-            print("Here is the list of users:")
-            for user in users:
-                print(user.strip())
 
 choices()
