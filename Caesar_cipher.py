@@ -1,5 +1,5 @@
 print("CAESAR CIPHER")
-special_char = ["!", "+", "-", "*", "@", "="]
+special_char = ["!", "+", "-", "*", "@", "=", " "]
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h",
             "i", "j", "k", "l", "m", "n", "o", "p",
             "q", "r", "s", "t", "u", "v", "w", "x",
@@ -25,7 +25,7 @@ def encode(secret_message, shifting):
         elif char in special_char:
             encode_message += char
         else:
-            print("The program does not support this character.")
+            print(f"The program does not support this character: {char}")
             encode_message = None
             break
     return encode_message
@@ -46,7 +46,7 @@ def decode(secret_message, secret_code):
         elif char in special_char:
             decode_message += char
         else:
-            print("The program does not support this character.")
+            print(f"The program does not support this character: {char}")
             decode_message = None
             break
     return decode_message
