@@ -1,17 +1,17 @@
+import sys
 print("Calculator.")
-print("""In our calculator, you can perform the following operations: 
-      addition ('+'),\n substraction ('-'),\n multiplication ('*')\n and division('/').""")
+print("""In our calculator, you can perform the following operations: \n addition ('+'),\n substraction ('-'),\n multiplication ('*')\n and division('/').""")
 
 permitted_operations = ["+", "-", "*", "/"]
 
 
 def choose_operation():
     while True:
-        operation = input(f"Type the operation you want to perform: {permitted_operations}")
+        operation = input(f"Type the operation you want to perform: {permitted_operations} ")
         if operation not in permitted_operations:
             print("This operation is not permitted.")
             continue
-    return operation
+        return operation
 
 
 def get_number(question):
@@ -36,8 +36,9 @@ def division(n1, n2):
         return n1 / n2
     except ZeroDivisionError:
         print("You cannot divide by zero.")
-
-
+        return None
+def performer_operation(operation):
+    
 def calculator():
     first_num = get_number("Type the first number: ")
 
@@ -59,42 +60,40 @@ def calculator():
         return result
 
 
-def decision_to_continue():
+def main():
         result = calculator()
-        while True:
-            decision = input(f"Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation: ")
-            try:
-                if decision == "yes":
-                    operation = choose_operation()
-                    second_num = get_number("Type another number: ")
-                    if operation == "+":
-                        result = addition(result, second_num)
-                    elif operation == "-":
-                        result = substraction(result, second_num)
-                    elif operation == "*":
-                        result = multiplication(result, second_num)
-                    elif operation == "/":
-                        temp_result = division(result, second_num)
-                        if temp_result is None:
-                            continue
+        history = str(result)
 
-                elif decision == "no":
-                    print("\n" * 30)   # sprawdzić dlaczego nie wykonuje się
-                    main()
-            except Exception:
+        while True:
+            decision = input(f"""Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation ,
+            or press Enter to quit: """)
+            if decision == "yes":
+                operation = choose_operation()
+                second_num = get_number("Type another number: ")
+                if operation == "+":
+                    result = addition(result, second_num)
+                elif operation == "-":
+                    result = substraction(result, second_num)
+                elif operation == "*":
+                    result = multiplication(result, second_num)
+                elif operation == "/":
+                    result = division(result, second_num)
+                    if result is None:
+                        continue
+
+
+                history += f"{operation} {second_num} = {result}"
+                print(f"Updated result: {history}")
+            elif decision == "no":
+                print("\n" * 30)
+                result = calculator()
+            elif decision == "":
+                print("Goodbye!")
+                sys.exit()
+            else:
                 print("Incorrect command.")
                 continue
         return result
 
-def main():
-    while True:
-        try:
-            if input("Press Enter to continue, or type 'exit' to quit: ").lower() == "exit":
-                print("Goodbye!")
-                break
-            else:
-                decision_to_continue()
-        except:
-            print("Incorrect command.")
-            continue
 
+main()
