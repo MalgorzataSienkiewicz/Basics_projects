@@ -37,51 +37,46 @@ def division(n1, n2):
     except ZeroDivisionError:
         print("You cannot divide by zero.")
         return None
-def performer_operation(operation):
-    
+
+def performer_operation(first_num, second_num, operation):
+    if operation == "+":
+        result = addition(first_num, second_num)
+    elif operation == "-":
+        result = substraction(first_num, second_num)
+    elif operation == "*":
+        result = multiplication(first_num, second_num)
+    elif operation == "/":
+        result = division(first_num, second_num)
+        if result is None:
+            flag = False
+
+    return result,flag
+
+
 def calculator():
+    flag = True
     first_num = get_number("Type the first number: ")
 
-    while True:
+    while flag:
         operation = choose_operation()
         second_num = get_number("Type the second number: ")
-        if operation == "+":
-            result = addition(first_num, second_num)
-        elif operation == "-":
-            result = substraction(first_num, second_num)
-        elif operation == "*":
-            result = multiplication(first_num, second_num)
-        elif operation == "/":
-            result = division(first_num, second_num)
-            if result is None:
-                continue
+        result,flag = performer_operation(first_num, second_num, operation)
 
-        print(f"{first_num} {operation} {second_num} = {result}")
-        return result
+    print(f"{first_num} {operation} {second_num} = {result}")
+    return result
 
 
 def main():
+        flag = True
         result = calculator()
         history = str(result)
 
-        while True:
-            decision = input(f"""Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation ,
-            or press Enter to quit: """)
+        while flag:
+            decision = input(f"""Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation, or press Enter to quit: """)
             if decision == "yes":
                 operation = choose_operation()
                 second_num = get_number("Type another number: ")
-                if operation == "+":
-                    result = addition(result, second_num)
-                elif operation == "-":
-                    result = substraction(result, second_num)
-                elif operation == "*":
-                    result = multiplication(result, second_num)
-                elif operation == "/":
-                    result = division(result, second_num)
-                    if result is None:
-                        continue
-
-
+                result,flag = performer_operation(result, second_num, operation)
                 history += f"{operation} {second_num} = {result}"
                 print(f"Updated result: {history}")
             elif decision == "no":
