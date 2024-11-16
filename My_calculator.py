@@ -4,7 +4,6 @@ print("""In our calculator, you can perform the following operations: \n additio
 
 permitted_operations = ["+", "-", "*", "/"]
 
-
 def choose_operation():
     while True:
         operation = input(f"Type the operation you want to perform: {permitted_operations} ")
@@ -12,7 +11,6 @@ def choose_operation():
             print("This operation is not permitted.")
             continue
         return operation
-
 
 def get_number(question):
     while True:
@@ -47,48 +45,29 @@ def performer_operation(first_num, second_num, operation):
         result = multiplication(first_num, second_num)
     elif operation == "/":
         result = division(first_num, second_num)
-        if result is None:
-            flag = False
-
-    return result,flag
-
-
-def calculator():
-    flag = True
-    first_num = get_number("Type the first number: ")
-
-    while flag:
-        operation = choose_operation()
-        second_num = get_number("Type the second number: ")
-        result,flag = performer_operation(first_num, second_num, operation)
-
-    print(f"{first_num} {operation} {second_num} = {result}")
     return result
 
-
 def main():
-        flag = True
-        result = calculator()
-        history = str(result)
-
-        while flag:
-            decision = input(f"""Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation, or press Enter to quit: """)
-            if decision == "yes":
+    decision = "no"
+    while True:
+        match decision:
+            case "no":
+                first_num = get_number("Type the first number: ")
+                decision = "yes"
+            case "yes":
                 operation = choose_operation()
                 second_num = get_number("Type another number: ")
-                result,flag = performer_operation(result, second_num, operation)
-                history += f"{operation} {second_num} = {result}"
-                print(f"Updated result: {history}")
-            elif decision == "no":
-                print("\n" * 30)
-                result = calculator()
-            elif decision == "":
+                result = performer_operation(first_num, second_num, operation)
+                if result == None:
+                    continue
+                else:
+                    print(f"{first_num} {operation} {second_num} = {result}")
+                    first_num = result
+                    decision = input(f"""Type 'yes' to continue calculating with {result}, type 'no' to start a new calculation, or press Enter to quit: """)
+            case "":
                 print("Goodbye!")
-                sys.exit()
-            else:
+                break
+            case _:
                 print("Incorrect command.")
                 continue
-        return result
-
-
 main()
