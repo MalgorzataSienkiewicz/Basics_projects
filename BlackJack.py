@@ -19,9 +19,8 @@ cards = {"A" : [1,11],
 player = []
 croupier = []
 
-def showing_cards():
-    round == 1
-    if round == 1:
+def showing_cards(round):
+    if round == 1 and len(player) != 0 and len(croupier) !=0:
         player_card = random.choice(player)  
         print(f"One of the player's cards is: {player_card}")
         croupier_card = random.choice(croupier)
@@ -33,18 +32,16 @@ def showing_cards():
 
 
 def draw(round):
-    round = 1
     draw_player = "yes"
-
     if round == 1:
-        for i in range(2):
-            choice = random.choice(cards)
-            for key, value in choice.items():
-                if range == 0:
-                    player.append(value)
-                else:
-                    croupier.append(value)
-        round = 0
+        for i in range(4):
+            choice = random.choice(list(cards.items()))
+            key, value = choice
+            if i == 0 or i == 1:
+                player.append(value)
+            else:
+                croupier.append(value)
+        
     else:
         choice = random.choice(cards)
         if draw_player == 'yes':
@@ -73,7 +70,7 @@ def checking():
     
 
 def hit():
-    draw()
+    draw(round=0)
     
 
 def stand():
@@ -92,7 +89,7 @@ def surrender():
 def choice_option():
     while True:
         print(f"Your cards: {player}")
-        option = input("You have 5 options: hit, stand, double_down, split, surrender. What do you choose: ")
+        option = input("You have 5 options: hit, stand, double_down, split, surrender. What do you choose: ").lower()
         if option == "hit":
             hit()
         elif option == "stand":
@@ -111,6 +108,7 @@ def main():
     round = 1
     draw(round)
     showing_cards(round)
+    round = 0
     while True:
         draw_player = "yes"
         if draw_player == "yes":
@@ -123,7 +121,6 @@ def main():
                 if sum(player) > 21:
                     print("You lose.")
                     break
-
         else:
             computer_move()
             draw_player = "yes"
