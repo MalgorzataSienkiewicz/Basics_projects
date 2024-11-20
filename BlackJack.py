@@ -28,20 +28,11 @@ def showing_cards(round):
         print(f"One of the dealer's cards is: {croupier[0]}")
     else:
         print(f"Player cards: {player}")
-        
 
-def draw(round, draw_for='player'):
+def draw(draw_for='player'):
     card = random.choice(list(cards.items())) 
     key, value = card
-    if round == 1:
-        if draw_for == "player":
-            player.append(value)
-            player_cards.append(key)
-        else:
-            croupier.append(value)
-            croupier_cards.append(key)
-    else:
-        if draw_for == "player":
+    if draw_for == "player":
             if key == "A":
                 choice = int(input("Will your card count as 1 or 11? ")) 
                 player.append(choice)
@@ -49,21 +40,19 @@ def draw(round, draw_for='player'):
             else:
                 player.append(value)
                 player_cards.append(key)
-        else:
-            if key == "A":
-                if sum(croupier) <= 10:
-                    croupier.append(value[1])
-                else:
-                    croupier.append(value[0])
+    else:
+        if key == "A":
+            if sum(croupier) <= 10:
+                croupier.append(value[1])
             else:
-                croupier.append(value)
-                croupier_cards(key)
-
-    
+                croupier.append(value[0])
+        else:
+            croupier.append(value)
+            croupier_cards.append(key)
 
 def computer_move():
     while sum([i for i in croupier if isinstance(i,int)]) < 17:
-        draw(round=0, draw_for='croupier')
+        draw(draw_for='croupier')
 
     
 def checking():
@@ -85,7 +74,7 @@ def checking():
     
 
 def hit():
-    draw(round=0, draw_for='player')
+    draw(draw_for='player')
 
 
 def stand():
@@ -126,10 +115,14 @@ def choice_option():
     
 def main():
     round = 1
-    for _ in range(2):
-        draw(round, draw_for= 'player')
-        draw(round, draw_for='croupier')
-    showing_cards(round)
+    if round == 1:
+        for _ in range(2):
+            draw(draw_for= 'player')
+            draw(draw_for='croupier')
+        showing_cards(round)
+        round = 2
+    else:
+        showing_cards(round)
 
     while sum(player) <= 21 and choice_option():
         pass
