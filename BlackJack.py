@@ -35,19 +35,27 @@ def draw(round):
     draw_player = "yes"
     if round == 1:
         for i in range(4):
-            choice = random.choice(list(cards.items()))
-            key, value = choice
+            card = random.choice(list(cards.items()))
+            key, value = card
             if i == 0 or i == 1:
                 player.append(value)
             else:
                 croupier.append(value)
         
     else:
-        choice = random.choice(cards)
+        card = random.choice(list(cards.items()))
+        key,value = card
         if draw_player == 'yes':
-            player.append(choice)
+            if key == "A":
+                choice = int(input("Your card will have '1' score or '11'? ")) 
+                player.append(choice)
+            else:
+                player.append(value)
         else:
-            croupier.append(choice)
+            if key == "A":
+                choice = random.choice[value]
+                croupier.append(choice)
+            croupier.append(value)
     return key, value 
 
 def computer_move():
