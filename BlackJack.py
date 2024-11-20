@@ -18,6 +18,8 @@ cards = {"A" : [1,11],
          }
 player = []
 croupier = []
+player_cards = []
+croupier_cards = []
 
 def showing_cards(round):
     if round == 1 and len(player) != 0 and len(croupier) !=0: 
@@ -26,7 +28,6 @@ def showing_cards(round):
     else:
         print(f"Player cards: {player}")
         
-    
 
 def draw(round, draw_for='player'):
     card = random.choice(list(cards.items())) 
@@ -34,12 +35,14 @@ def draw(round, draw_for='player'):
     if round == 1:
         if draw_for == "player":
             player.append(value)
+            player_cards.append(key)
         else:
             croupier.append(value)
+            croupier_cards.append(key)
     else:
         if draw_for == "player":
             if key == "A":
-                choice = int(input("Your card will have '1' score or '11'? ")) 
+                choice = int(input("Will your card count as 1 or 11? ")) 
                 player.append(choice)
             else:
                 player.append(value)
@@ -53,14 +56,15 @@ def draw(round, draw_for='player'):
     
 
 def computer_move():
-    while sum(croupier) < 17:
+    while sum([i for i in croupier if isinstance(i,int)]) < 17:
         draw(round=0, draw_for='croupier')
 
     
 def checking():
+    print(player)
     score_player = sum(player)
     score_croupier = sum(croupier)
-    if score_player > score_croupier:
+    if score_player > 21:
         print("Player bust! Dealer wins.")
     elif score_croupier > 21:
         print("Dealer bust! Player wins.")
@@ -70,30 +74,28 @@ def checking():
         print("Dealer wins!")
     else:
         print("It's a draw!")
-    showing_cards(0)
-    print(f"Dealer cards: {croupier}")
+    print(f"Player cards: {player_cards}")
+    print(f"Dealer cards: {croupier_cards}")
     
 
 def hit():
     draw(round=0, draw_for='player')
-    
+
 
 def stand():
     computer_move()
     checking()
 
+
 def double_down():
     hit()
     stand()
-
-def split():
-    pass
 
 
 def choice_option():
     while True:
         print(f"Your cards: {player}")
-        option = input("You have 5 options: hit, stand, double_down, split, surrender. What do you choose: ").lower()
+        option = input("You have 5 options: hit, stand, double_down, surrender. What do you choose: ").lower()
         if option == "hit":
             hit()
             if sum(player) > 21: 
@@ -107,8 +109,6 @@ def choice_option():
         elif option == "double_down":
             double_down()
             break
-        elif option == "split":
-            split()
         elif option == "surrender":
             print("Player surrenders. Dealer wins.")
             break
