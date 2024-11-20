@@ -16,6 +16,7 @@ cards = {"A" : [1,11],
          "Q" : 10,
          "W" : 10
          }
+
 player = []
 croupier = []
 player_cards = []
@@ -44,15 +45,20 @@ def draw(round, draw_for='player'):
             if key == "A":
                 choice = int(input("Will your card count as 1 or 11? ")) 
                 player.append(choice)
+                player_cards.append(key)
             else:
                 player.append(value)
+                player_cards.append(key)
         else:
             if key == "A":
                 if sum(croupier) <= 10:
-                    croupier.append(key[1])
+                    croupier.append(value[1])
                 else:
-                    croupier.append(key[0])
-            croupier.append(value)
+                    croupier.append(value[0])
+            else:
+                croupier.append(value)
+                croupier_cards(key)
+
     
 
 def computer_move():
@@ -95,7 +101,7 @@ def double_down():
 def choice_option():
     while True:
         print(f"Your cards: {player}")
-        option = input("You have 5 options: hit, stand, double_down, surrender. What do you choose: ").lower()
+        option = input("You have 5 options: hit, stand, double_down, surrender. What do you choose: ").lower().strip()
         if option == "hit":
             hit()
             if sum(player) > 21: 
