@@ -69,10 +69,13 @@ def checking():
     score_croupier = sum(croupier)
     winner = ''
     if score_player > score_croupier:
+        showing_cards(0)
         winner = "Player win."
     elif score_player == score_croupier:
+        showing_cards(0)
         winner = "It's a draw."
     else:
+        showing_cards(0)
         winner = "Croupier win."
     return winner
     
