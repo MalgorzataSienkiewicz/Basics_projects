@@ -53,8 +53,10 @@ def draw(round):
                 player.append(value)
         else:
             if key == "A":
-                choice = random.choice[value]
-                croupier.append(choice)
+                if sum(croupier) <= 10:
+                    croupier.append(key[1])
+                else:
+                    croupier.append(key[0])
             croupier.append(value)
     return key, value 
 
