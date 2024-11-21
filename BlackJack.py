@@ -112,8 +112,8 @@ def checking():
 def hit():
     """Function for the hit option."""
     draw(draw_for='player')
-
-
+    
+        
 def stand():
     """Function for the stand option."""
     computer_move()
@@ -130,12 +130,22 @@ def choice_option():
     """Function for player to choose an option."""
     while True:
         print(f"Your cards: {player}")
-        option = input("You have 5 options: hit, stand, double_down, surrender. What do you choose: ").lower().strip()
+        option = input("You have 4 options: hit, stand, double_down, surrender. What do you choose: ").lower().strip()
         if option == "hit":
             hit()
             if sum(player) > 21: 
                 print("Player bust! Dealer wins.") 
                 showing_cards(0)
+                break
+            if sum(croupier) == 21:
+                print("Dealer wins!")
+                print(f"Player cards: {player_cards}")
+                print(f"Dealer cards: {croupier_cards}")
+                break
+            if sum(player) == 21:
+                print("Player wins!")
+                print(f"Player cards: {player_cards}")
+                print(f"Dealer cards: {croupier_cards}")
                 break
             continue
         elif option == "stand":
