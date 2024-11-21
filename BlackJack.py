@@ -63,6 +63,10 @@ def checking():
         print("Player bust! Dealer wins.")
     elif score_croupier > 21:
         print("Dealer bust! Player wins.")
+    elif score_croupier == 21:
+        print("Dealer wins!")
+    elif score_player == 21:
+        print("Player wins!.")
     elif score_player > score_croupier:
         print("Players wins!")
     elif score_player < score_croupier:
