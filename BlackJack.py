@@ -1,7 +1,9 @@
 import random
 
-print("Welcome in game BLACK JACK.\n")
-print("""Blackjack, also known as '21', is a popular card game where players compete against the dealer rather than each other.
+
+def welcome():
+    print("Welcome in game BLACK JACK.\n")
+    print("""Blackjack, also known as '21', is a popular card game where players compete against the dealer rather than each other.
 The objective is to have a hand total closer to 21 than the dealer's hand, without exceeding 21.\n
 Card values:
 Number cards (2–10): Face value.
@@ -163,8 +165,9 @@ def choice_option():
     return False
 
     
-def main():
+def blackJackInit():
     """Main function to start the game."""
+    welcome()
     while True:
         global player, croupier, player_cards, croupier_cards
         player, croupier, player_cards, croupier_cards = [], [], [], []
@@ -189,7 +192,8 @@ def main():
             break
 
             
-main()
+if __name__ == "__main__":     
+    blackJackInit()
     
 
 
