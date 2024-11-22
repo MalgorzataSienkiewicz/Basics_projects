@@ -1,73 +1,47 @@
-import random
+from random import randint
 
-print("Welcome to the Number Guessing Game!")
-print("I'm thinking of a number between 1 and 100.")
-
-number = random.randint(1,100)
-
-def checking(guess,number):
+def checking(guess, number):
     if guess > number:
         return "To high."
     elif guess < number:
-        return"To low."
+        return "To low."
     else:
         return "win"
 
-
-def easy_level(number):
-    attempts = 10
+def play_level(number, attempts):
     while attempts:
         print(f"You have {attempts} attempts remaining to guess the number.")
         try:
             guess = int(input("Make a guess: "))
         except:
-            print("You must type integer. Try again")
+            print("You must type integer.")
+            if attempts > 1:
+                print(f"Try again")
             attempts -= 1
             continue
         else:
-           result= checking(guess,number)
+           result = checking(guess, number)
            if result != "win":
-               print(f"{result}. Guess again")
-               attempts -= 1
+                if attempts > 1:
+                    print(f"{result}. Guess again")
+                attempts -= 1
            else:
                return "win"
     return "lose"
-
-
-def hard_level(number):
-    attempts = 5
-    while attempts:
-        print(f"You have {attempts} attempts remaining to guess the number.")
-        try:
-            guess = int(input("Make a guess: "))
-        except:
-            print("You must type integer. Try again")
-            attempts -= 1
-            continue
-        else:
-           result = checking(guess,number)
-           print(f"{result}. Guess again.")
-           if result != "win":
-               attempts -= 1
-           else:
-               return "win"
-    return "lose"
-    
 
 def choose_difficulty(number):
     while True:
         difficulty = input("Type 'easy' or 'hard': ").lower().strip()
         if difficulty == "easy":
-             return easy_level(number)
+             return play_level(number, 10)
         elif difficulty == "hard":
-            return hard_level(number)
+            return play_level(number, 5)
         else:
             print("Incorrect command. Try again.")
-
     
-def main():
+def numberGuessGameInit():
     while True:
-        number = random.randint(1,100)
+        number = randint(1,100)
         result = choose_difficulty(number)
         if result == "win":
             print("Congratulation! You win!")   
@@ -80,5 +54,8 @@ def main():
         else:
             print("Goodbye!")
             break
-        
-main()
+            
+if __name__ == "__main__":
+    print("Welcome to the Number Guessing Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    numberGuessGameInit()
