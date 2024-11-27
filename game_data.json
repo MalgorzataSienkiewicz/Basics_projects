@@ -1,0 +1,73 @@
+    [
+    {
+    "name" : "Kim Kardashian",
+    "follower_count" : 359,
+    "description" : "Actor, Businesswoman, Celebrity",
+    "country" : "USA"
+    },
+
+    {
+    "name" : "Cristiano Ronaldo",
+    "follower_count" : 643,
+    "description" : "Footballer",
+    "country" : "Portugal"
+    },
+
+    {
+    "name" : "Beyoncé",
+    "follower_count" : 314,
+    "description" : "Actor, Singer",
+    "country" : "USA"
+    },
+
+    {
+    "name" : "Justin Bieber",
+    "follower_count" : 295,
+    "description" : "Singer",
+    "country" : "USA"
+    },
+
+    {
+    "name" : "Robert Lewandowski",
+    "follower_count" : 36,
+    "description" : "Footballer",
+    "country" : "Poland"
+    },
+
+    {
+    "name" : "Leo Messi",
+    "follower_count" : 504,
+    "description" : "Footballer",
+    "country" : "Argentina"
+    },
+
+    {
+    "name" : "Taylor Swift",
+    "follower_count" : 283,
+    "description" : "Singer",
+    "country" : "USA"
+    },
+
+    {
+    "name" : "Nicki Minaj",
+    "follower_count" : 227,
+    "description" : "Singer",
+    "country" : "USA"
+    },
+
+    {
+    "name" : "Shakira",
+    "follower_count" : 90,
+    "description" : "Singer",
+    "country" : "Colombia"
+    },
+
+    {
+    "name" : "Jennifer Lopez",
+    "follower_count" : 250,
+    "description" : "Actor, Singer",
+    "country" : "USA"
+    }]
+
+
+
