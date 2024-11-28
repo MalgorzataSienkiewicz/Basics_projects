@@ -1,6 +1,8 @@
 import json
 from random import choice
 
+SCORE_TO_WIN = 5
+
 with open("game_data.json", "r") as file:
     content = json.load(file)
 
@@ -24,7 +26,8 @@ def guessing(first_person, second_person):
             print("Incorrect command. Try again.")
             continue
 
-def compare(first_person, second_person, guess, score, score_to_win):
+'''@todo optimalize prints'''
+def compare(first_person, second_person, guess, score):
         if guess == "A" and first_person["follower_count"] > second_person["follower_count"]:
             score += 1
             print(f"""You're right!
@@ -43,7 +46,7 @@ Current score: {score}""")
 {second_person['name']} has {second_person['follower_count']} mln followers.
 Final score: {score}""")
             return False
-        if score == score_to_win:
+        if score == SCORE_TO_WIN:
             print("Congratulation! You win!")
             return False
         return score
@@ -51,11 +54,10 @@ Final score: {score}""")
 def game():
     while True:
         score = 0
-        score_to_win = 5
         while True:
             first_person, second_person = celebrity_draw()
             guess = guessing(first_person, second_person)
-            result = compare(first_person, second_person, guess, score, score_to_win)
+            result = compare(first_person, second_person, guess, score)
             if result is False:
                 break
             else:
