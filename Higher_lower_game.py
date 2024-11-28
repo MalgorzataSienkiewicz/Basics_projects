@@ -1,8 +1,6 @@
 import json
 from random import choice
-print("Welcome in Higher Lower game!")
-print("If your answer is correct, I will give you 1 point. Otherwise, you lose immediately.")
-print("You win if your score is equal to 5.\n")
+
 with open("game_data.json", "r") as file:
     content = json.load(file)
 
@@ -26,10 +24,13 @@ def guessing(first_person, second_person):
             print("Incorrect command. Try again.")
             continue
 
-def compare(first_person, second_person, guess, score):
+def compare(first_person, second_person, guess, score, score_to_win):
         if guess == "A" and first_person["follower_count"] > second_person["follower_count"]:
             score += 1
-            print(f"You're right! Current score: {score}")
+            print(f"""You're right!
+{first_person['name']} has {first_person['follower_count']} mln followers,
+{second_person['name']} has {second_person['follower_count']} mln followers. 
+Current score: {score}""")
         elif guess == "B" and second_person["follower_count"] > first_person["follower_count"]:
             score += 1
             print(f"""You're right! 
@@ -42,7 +43,7 @@ Current score: {score}""")
 {second_person['name']} has {second_person['follower_count']} mln followers.
 Final score: {score}""")
             return False
-        if score == 5:
+        if score == score_to_win:
             print("Congratulation! You win!")
             return False
         return score
@@ -50,22 +51,26 @@ Final score: {score}""")
 def game():
     while True:
         score = 0
-        while score < 5:
+        score_to_win = 5
+        while True:
             first_person, second_person = celebrity_draw()
-            guess = guessing(first_person,second_person)
-            result = compare(first_person,second_person,guess,score)
+            guess = guessing(first_person, second_person)
+            result = compare(first_person, second_person, guess, score, score_to_win)
             if result is False:
                 break
             else:
                 score = result
 
-        if result is False and score < 5:
+        if result is False:
             next_game = input("Do you want play again? Type 'yes' or press Enter and quit the game: ").lower().strip()
             if next_game != "yes":
                 print("Thanks for playing!")
                 break
 
 if __name__ == "__main__":
+    print("Welcome in Higher Lower game!")
+    print("If your answer is correct, I will give you 1 point. Otherwise, you lose immediately.")
+    print("You win if your score is equal to 5.\n")
     game()
 
 
