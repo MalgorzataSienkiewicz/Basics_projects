@@ -43,13 +43,10 @@ def payment(coffee_price):
 
 def checking_resources(coffee_choice):
         coffee_data = info_coffee[coffee_choice]
-        if (resources["water"] >= coffee_data["water"] and
-            resources["coffee"] >= coffee_data["coffee"] and
-            resources["milk"] >= coffee_data["milk"]):
-
-            resources["water"] = resources["water"] - coffee_data["water"]
-            resources["coffee"] = resources["coffee"] - coffee_data["coffee"]
-            resources['milk'] = resources["milk"] - coffee_data["milk"]
+        if all(resources[key] >= coffee_data[key] for key in coffee_data if key in resources):
+            for key in coffee_data:
+                if key in resources:
+                    resources[key] -= coffee_data[key]
 
             print(f"${coffee_data['price']}. Insert coins please.")
             payment(coffee_data['price'])
