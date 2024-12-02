@@ -1,15 +1,17 @@
 import json
+import sys
 
 with open("Menu_CoffeeMachine.json") as file:
     info_coffee = json.load(file)
 
-resources = {
+resources ={
     "water" : 500,
     "coffee" : 50,
     "milk" : 500
 }
 
-def payment(coffee_price):
+def payment(coffee_data):
+
     coins = {
         "quarter": 0.25,
         "dime": 0.10,
@@ -22,37 +24,36 @@ def payment(coffee_price):
     for coin, value in coins.items():
         while True:
             try:
-                count = int(input(f"How many {coin}s? "))
+                count = int(input(f"How many {coin}s insert? "))
                 if count < 0:
                     print("Please enter a non-negative integer. Try again.")
                     continue
                 sum_coins += count * value
                 print(f"Total so far: ${sum_coins:.2f}")
+                if sum_coins >= coffee_data['price']:
+                    change = sum_coins - coffee_data['price']
+                    print(f"Here's your change: ${change:.2f}.")
+                    print("Your coffee. Enjoy!")
+                    for key in coffee_data:
+                        if key in resources:
+                            resources[key] -= coffee_data[key]
+                    return
+                break
             except ValueError:
                 print("Type an integer. Try again.")
-
-            if sum_coins >= coffee_price:
-                change = sum_coins - coffee_price
-                print(f"Here's your change: ${change:.2f}.")
-                print("Your coffee. Enjoy!")
-                return
-
     else:
-        print(f"Sorry, you don't have enough money. Please take your money: {sum_coins:.2f}.")
+        print(f"Sorry, you don't have enough money. Please take your money: ${sum_coins:.2f}.")
 
 
 def checking_resources(coffee_choice):
         coffee_data = info_coffee[coffee_choice]
         if all(resources[key] >= coffee_data[key] for key in coffee_data if key in resources):
-            for key in coffee_data:
-                if key in resources:
-                    resources[key] -= coffee_data[key]
-
-            print(f"${coffee_data['price']}. Insert coins please.")
-            payment(coffee_data['price'])
+            print(f"${coffee_data['price']:.2f}. Insert coins please.")
+            payment(coffee_data)
         else:
             print("We don't have sufficient resources. Ending the program.")
-            return
+            sys.exit()
+
 
 def choosing_coffee():
     while True:
