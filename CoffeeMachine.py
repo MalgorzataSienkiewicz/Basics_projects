@@ -1,11 +1,5 @@
 import json
 
-print("COFFEE MACHINE")
-print("""MENU:
-1. Cappuccino - $3.00
-2. Latte - $2.50
-3. Espresso - $1.50""")
-
 with open("Menu_CoffeeMachine.json") as file:
     info_coffee = json.load(file)
 
@@ -15,7 +9,7 @@ resources = {
     "milk" : 500
 }
 
-def payment():
+def payment(coffee_price):
     coins = {
         "quarter": 0.25,
         "dime": 0.10,
@@ -33,41 +27,42 @@ def payment():
                     print("Please enter a non-negative integer. Try again.")
                     continue
                 sum_coins += count * value
-                break
+                print(f"Total so far: ${sum_coins:.2f}")
             except ValueError:
                 print("Type an integer. Try again.")
 
-            print(f"Total so far: ${sum_coins:.2f}")
-
-            if sum_coins > value or sum_coins == value:
-                change = sum_coins - value
-                print(f"Here's your change: ${change}.")
+            if sum_coins >= coffee_price:
+                change = sum_coins - coffee_price
+                print(f"Here's your change: ${change:.2f}.")
                 print("Your coffee. Enjoy!")
-                break
-            else:
-                print(f"Sorry, you don't have enough money. Please take your money: {sum_coins}.")
-                break
+                return
 
-def checking_resources(coffee):
-        if coffee == 1:
-            coffee = 0
-        elif coffee == 2:
-            coffee = 1
-        else:
-            coffee = 2
+    else:
+        print(f"Sorry, you don't have enough money. Please take your money: {sum_coins:.2f}.")
 
-        if info_coffee[coffee]["water"] >= resources["water"] and info_coffee[coffee]["coffee"] >= resources["coffee"] and \
-                info_coffee[coffee]["milk"] >= resources["milk"]:
-            print(f"${info_coffee[coffee]['price']}. Insert coins please.")
+
+def checking_resources(coffee_choice):
+        coffee_data = info_coffee[coffee_choice]
+        if (resources["water"] >= coffee_data["water"] and
+            resources["coffee"] >= coffee_data["coffee"] and
+            resources["milk"] >= coffee_data["milk"]):
+
+            resources["water"] = resources["water"] - coffee_data["water"]
+            resources["coffee"] = resources["coffee"] - coffee_data["coffee"]
+            resources['milk'] = resources["milk"] - coffee_data["milk"]
+
+            print(f"${coffee_data['price']}. Insert coins please.")
+            payment(coffee_data['price'])
         else:
-            print("We don't have sufficient resources. Try choose another coffee.")
+            print("We don't have sufficient resources. Ending the program.")
+            return
 
 def choosing_coffee():
     while True:
         try:
             coffee = int(input("Which coffee do you want to drink? Type menu number: "))
-            if coffee == 1 or coffee == 2 or coffee == 3:
-                checking_resources(coffee)
+            if coffee in [1,2,3]:
+                checking_resources(coffee - 1)
                 break
             else:
                 print("Incorrect menu. Try again.")
@@ -78,6 +73,12 @@ def choosing_coffee():
 def main():
     while True:
         choosing_coffee()
-        payment()
 
-main()
+
+if __name__ == "__main__":
+    print("COFFEE MACHINE")
+    print("""MENU:
+    1. Cappuccino - $3.00
+    2. Latte - $2.50
+    3. Espresso - $1.50""")
+    main()

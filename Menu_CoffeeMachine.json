@@ -3,21 +3,21 @@
     "name": "Cappuccino",
     "price": 1.5,
     "water": 250,
-    "coffe": 24,
+    "coffee": 24,
     "milk": 100
   },
   {
     "name": "Latte",
     "price": 2.5,
     "water": 200,
-    "coffe": 24,
+    "coffee": 24,
     "milk": 150
   },
   {
     "name": "Espresso",
     "price": 1.5,
     "water": 50,
-    "coffe": 18,
+    "coffee": 18,
     "milk": 0
 
   }
