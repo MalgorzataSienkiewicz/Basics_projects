@@ -37,9 +37,16 @@ def payment():
             except ValueError:
                 print("Type an integer. Try again.")
 
-        print(f"Total so far: ${sum_coins:.2f}")
+            print(f"Total so far: ${sum_coins:.2f}")
 
-    print(f"Final total: ${sum_coins:.2f}")
+            if sum_coins > value or sum_coins == value:
+                change = sum_coins - value
+                print(f"Here's your change: ${change}.")
+                print("Your coffee. Enjoy!")
+                break
+            else:
+                print(f"Sorry, you don't have enough money. Please take your money: {sum_coins}.")
+                break
 
 def checking_resources(coffee):
         if coffee == 1:
@@ -57,9 +64,20 @@ def checking_resources(coffee):
 
 def choosing_coffee():
     while True:
-        coffee = input("Which coffee do you want to drink? Type menu number: ")
-        if coffee != 1 or coffee != 2 or coffee != 3:
-            print("Incorrect menu. Try again.")
-            continue
-        else:
-            checking_resources(coffee)
+        try:
+            coffee = int(input("Which coffee do you want to drink? Type menu number: "))
+            if coffee == 1 or coffee == 2 or coffee == 3:
+                checking_resources(coffee)
+                break
+            else:
+                print("Incorrect menu. Try again.")
+                continue
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+def main():
+    while True:
+        choosing_coffee()
+        payment()
+
+main()
