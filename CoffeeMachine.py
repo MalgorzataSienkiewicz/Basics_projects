@@ -9,10 +9,6 @@ print("""MENU:
 with open("Menu_CoffeeMachine.json") as file:
     info_coffee = json.load(file)
 
-coins = {"penny" : 0.01,
-         "dime" : 0.10,
-         "nickel" : 0.05,
-         "quarter" : 0.25}
 resources = {
     "water" : 500,
     "coffee" : 50,
@@ -20,7 +16,30 @@ resources = {
 }
 
 def payment():
-    pass
+    coins = {
+        "quarter": 0.25,
+        "dime": 0.10,
+        "nickel": 0.05,
+        "penny": 0.01
+    }
+
+    sum_coins = 0
+
+    for coin, value in coins.items():
+        while True:
+            try:
+                count = int(input(f"How many {coin}s? "))
+                if count < 0:
+                    print("Please enter a non-negative integer. Try again.")
+                    continue
+                sum_coins += count * value
+                break
+            except ValueError:
+                print("Type an integer. Try again.")
+
+        print(f"Total so far: ${sum_coins:.2f}")
+
+    print(f"Final total: ${sum_coins:.2f}")
 
 def checking_resources(coffee):
         if coffee == 1:
@@ -32,7 +51,7 @@ def checking_resources(coffee):
 
         if info_coffee[coffee]["water"] >= resources["water"] and info_coffee[coffee]["coffee"] >= resources["coffee"] and \
                 info_coffee[coffee]["milk"] >= resources["milk"]:
-            print(f"${info_coffee[coffee]['price']} please.")
+            print(f"${info_coffee[coffee]['price']}. Insert coins please.")
         else:
             print("We don't have sufficient resources. Try choose another coffee.")
 
